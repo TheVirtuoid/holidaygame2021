@@ -1,0 +1,33 @@
+{
+  "name": "holidaygame2021",
+  "version": "1.0.0",
+  "description": "Happy Holidays from TheVirtuoid and Boring JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheVirtuoid/holidaygame2021.git"
+  },
+  "keywords": [
+    "Santa",
+    "Krampus",
+    "Holidays"
+  ],
+  "author": "TheVirtuoid <thevirtuoid@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TheVirtuoid/holidaygame2021/issues"
+  },
+  "homepage": "https://github.com/TheVirtuoid/holidaygame2021#readme",
+  "dependencies": {
+    "phaser": "^3.55.2"
+  },
+  "devDependencies": {
+    "vite": "^2.0.5"
+  }
+}
