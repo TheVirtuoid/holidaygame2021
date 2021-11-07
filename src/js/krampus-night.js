@@ -1,3 +1,9 @@
+import Game from "./classes/Game.js";
+
+const game = new Game();
+game.start();
+
+/*
 import Phaser from 'phaser';
 import youTubeImage from './../img/youTubeImage.png';
 
@@ -31,3 +37,4 @@ const config = {
 }
 const game = new Phaser.Game(config);
 console.log('it works!');
+*/

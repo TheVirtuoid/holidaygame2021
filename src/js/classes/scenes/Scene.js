@@ -1,18 +1,20 @@
 import Phaser from "phaser";
+import Config from "../utilities/config.js";
 
 export default class Scene {
 	type = Phaser.AUTO;
-	width = 800;
-	height = 600;
+	width = Config.WIDTH;
+	height = Config.HEIGHT;
 	scene = null;
 	anchorPoint = null;
+	html = '';
 
 	constructor (args) {
 		this.type = args?.type || Phaser.AUTO;
-		this.width = args?.width || 800;
-		this.height = args?.height || 600;
+		this.width = args?.width || Config.WIDTH;
+		this.height = args?.height || Config.HEIGHT;
 		this.scene = null;
-		this.anchorPoint = args?.anchorPoint || 'game';
+		this.anchorPoint = args?.anchorPoint || 'pitch';
 	}
 
 	preload () {}
@@ -20,4 +22,13 @@ export default class Scene {
 	create () {}
 
 	update () {}
+
+	asHtml () {
+		const anchorPointDom = document.getElementById(this.anchorPoint);
+		while(anchorPointDom.firstChild) {
+			anchorPointDom.removeChild(anchorPointDom.firstChild);
+		}
+		anchorPointDom.insertAdjacentHTML('afterbegin', this.html);
+	}
+
 }
