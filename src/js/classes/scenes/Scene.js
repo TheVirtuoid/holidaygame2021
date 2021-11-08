@@ -1,34 +1,42 @@
-import Phaser from "phaser";
+import PhaserDriver from "./drivers/PhaserDriver.js";
 import Config from "../utilities/config.js";
 
 export default class Scene {
-	type = Phaser.AUTO;
 	width = Config.WIDTH;
 	height = Config.HEIGHT;
 	scene = null;
 	anchorPoint = null;
 	html = '';
+	driver = null;
 
 	constructor (args) {
-		this.type = args?.type || Phaser.AUTO;
 		this.width = args?.width || Config.WIDTH;
 		this.height = args?.height || Config.HEIGHT;
 		this.scene = null;
 		this.anchorPoint = args?.anchorPoint || 'pitch';
+		this.driver = new PhaserDriver(this.toConfig());
 	}
 
-	preload () {}
+	toConfig() {
+		return {
+			width: this.width,
+			height: this.height,
+			anchorPoint: this.anchorPoint
+		};
+	}
 
-	create () {}
+	asPlayingField () {
+		this.scene = this.driver.createScene();
+	}
 
-	update () {}
-
-	asHtml () {
+	asHtml (display = true) {
 		const anchorPointDom = document.getElementById(this.anchorPoint);
 		while(anchorPointDom.firstChild) {
 			anchorPointDom.removeChild(anchorPointDom.firstChild);
 		}
-		anchorPointDom.insertAdjacentHTML('afterbegin', this.html);
+		if (display) {
+			anchorPointDom.insertAdjacentHTML('afterbegin', this.html);
+		}
 	}
 
 }

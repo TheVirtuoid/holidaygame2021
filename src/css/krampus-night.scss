@@ -31,11 +31,25 @@ main {
   background-color: black;
   color: white;
   font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
-  h2 {
-    text-align: center;
-    font-size: 1.2rem;
-    margin: .5rem 0;
+  #action {
+    margin: .5rem auto;
+    display: block;
+    width: 50%;
+    border-width: 2px;
+    border-radius: 1rem;
+    border-color: transparent;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: .8rem;
+    cursor: pointer;
+    &.start {
+      background-color: green;
+      color: yellow;
+    }
   }
 
   #score {
@@ -71,6 +85,42 @@ main {
         font-size: .6rem;
         color: white;
       }
+    }
+  }
+}
+
+#action-list {
+  display: flex;
+  justify-content: center;
+  button {
+    margin: .5rem auto;
+    display: block;
+    min-width: 4rem;
+    border-width: 2px;
+    border-radius: 1rem;
+    border-color: transparent;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: .8rem;
+    cursor: pointer;
+
+    &.hide {
+      display: none;
+    }
+
+    &#action-start {
+      background-color: green;
+      color: yellow;
+    }
+
+    &#action-pause {
+      background-color: grey;
+      color: black;
+    }
+
+    &#action-end {
+      background-color: red;
+      color: white;
     }
   }
 }
