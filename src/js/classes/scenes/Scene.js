@@ -21,7 +21,14 @@ export default class Scene {
 		return {
 			width: this.width,
 			height: this.height,
-			anchorPoint: this.anchorPoint
+			anchorPoint: this.anchorPoint,
+			physics: {
+				default: 'arcade',
+				arcade: {
+					gravity: { y: 300 },
+					debug: false
+				}
+			}
 		};
 	}
 
