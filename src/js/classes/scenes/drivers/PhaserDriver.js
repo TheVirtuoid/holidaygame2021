@@ -3,13 +3,26 @@ import Phaser from "phaser";
 export default class PhaserDriver {
 
 	config;
+	#game;
+	#sceneManager;
 	#images;
 	#scene;
+	#child;
 
 	constructor(config) {
 		this.config = config;
 		this.config.type = this.config.type || Phaser.AUTO;
 		this.config.parent = this.config.anchorPoint || 'pitch';
+	}
+
+	createGame(config) {
+		const newConfig = config || this.config;
+		this.#game = new Phaser.Game(this.config);
+		this.#sceneManager = this.#game.scene;
+	}
+
+	addScene(sceneConfig) {
+		this.#sceneManager.add(sceneConfig);
 	}
 
 	createScene(config) {
@@ -32,7 +45,7 @@ export default class PhaserDriver {
 		this.load.image('krampus', '/img/krampus-2.png');
 		this.load.image('present', '/img/present-2.png');
 		this.load.image('bagofcoal', '/img/bag-of-coal-2.png');
-		this.load.spritesheet('right-left-child', '/img/right-left-child-working.png',
+		this.load.spritesheet('right-left-child', '/img/rightleft-child-working.png',
 				{ frameWidth: 60, frameHeight: 60}
 		);
 /*
@@ -47,13 +60,14 @@ export default class PhaserDriver {
 		this.add.image(100, 120, 'krampus');
 		this.add.image(200, 120, 'present');
 		this.add.image(300, 120, 'bagofcoal');
-		// const child = this.physics.add.sprite(100, 200, 'right-left-child');
+		const child = this.add.sprite(100, 200, 'right-left-child');
 		this.anims.create({
 			key: 'left',
 			frames: this.anims.generateFrameNumbers('right-left-child', { start: 0, end: 3 }),
-			frameRate: 10,
+			frameRate: 5,
 			repeat: -1
 		});
+		child.play('left');
 	}
 
 	#update () {}

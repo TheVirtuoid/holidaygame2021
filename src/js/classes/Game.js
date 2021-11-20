@@ -17,12 +17,13 @@ export default class Game {
 	#actionButtonPause = document.getElementById('action-pause');
 	#actionButtonEnd = document.getElementById('action-end');
 
-	constructor() {
-		const anchorPoint = 'pitch';
+	constructor(args) {
+		const anchorPoint = Config.ANCHOR_POINT;
+		const engine = args?.engine || null;
 		this.#main = new Main({ anchorPoint });
 		this.#instructions = new Instructions({ anchorPoint });
 		this.#highScore = new HighScore({ anchorPoint });
-		this.#play = new Play({ anchorPoint });
+		this.#play = new Play({ anchorPoint, engine });
 		this.#rotatingScreens.set('main', this.#main);
 		this.#rotatingScreens.set('instructions', this.#instructions);
 		this.#rotatingScreens.set('high-score', this.#highScore);

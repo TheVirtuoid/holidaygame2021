@@ -1,27 +1,30 @@
-import PhaserDriver from "./drivers/PhaserDriver.js";
+import PhaserGame from "../game-engines/phaser/PhaserGame.js";
 import Config from "../utilities/config.js";
+import Pitch from "../game-engines/Pitch.js";
 
 export default class Scene {
-	width = Config.WIDTH;
-	height = Config.HEIGHT;
+	#width = Config.WIDTH;
+	#height = Config.HEIGHT;
 	scene = null;
-	anchorPoint = null;
+	#anchorPoint = Config.ANCHOR_POINT;
 	html = '';
-	driver = null;
+	#engine = null;
+	#pitch = null;
 
 	constructor (args) {
-		this.width = args?.width || Config.WIDTH;
-		this.height = args?.height || Config.HEIGHT;
-		this.scene = null;
-		this.anchorPoint = args?.anchorPoint || 'pitch';
-		this.driver = new PhaserDriver(this.toConfig());
+		this.#width = args?.width || this.#width;
+		this.#height = args?.height || this.#height;
+		this.#anchorPoint = args?.anchorPoint || this.#anchorPoint;
+		this.#engine = args?.engine || this.#engine;
 	}
 
 	toConfig() {
 		return {
-			width: this.width,
-			height: this.height,
-			anchorPoint: this.anchorPoint,
+			width: this.#width,
+			height: this.#height,
+			anchorPoint: this.#anchorPoint,
+			engine: this.#engine,
+			parent: this.#anchorPoint,
 			physics: {
 				default: 'arcade',
 				arcade: {
@@ -33,11 +36,11 @@ export default class Scene {
 	}
 
 	asPlayingField () {
-		this.scene = this.driver.createScene();
+		this.#pitch = new Pitch(this.toConfig());
 	}
 
 	asHtml (display = true) {
-		const anchorPointDom = document.getElementById(this.anchorPoint);
+		const anchorPointDom = document.getElementById(this.#anchorPoint);
 		while(anchorPointDom.firstChild) {
 			anchorPointDom.removeChild(anchorPointDom.firstChild);
 		}
