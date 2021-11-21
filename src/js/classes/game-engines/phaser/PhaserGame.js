@@ -12,11 +12,12 @@ export default class PhaserGame {
 		scene: {
 			preload: this.preload.bind(this),
 			create: this.create.bind(this),
-			update: this.update
+			update: this.update.bind(this)
 		}
 	};
 	#game = null;
 	#player = new Player();
+	#keyboard = null;
 
 	constructor(gameConfig) {
 		this.#config = {...this.#config, ...gameConfig };
@@ -25,19 +26,25 @@ export default class PhaserGame {
 
 	preload() {
 		const scene = this.#game.scene.scenes[0];
-		this.#player.imageData.forEach( (imageData) => {
-			scene.load.image(imageData.tag, imageData.name);
-		});
-		scene.load.image('bag-of-coal', '/img/bag-of-coal.png');
-		scene.load.image('present', '/img/present-2.png');
-		scene.load.spritesheet('right-left-child', '/img/rightleft-child-working.png', { frameWidth: 60, frameHeight: 60});
+		this.#player.load(scene);
+		// scene.load.image('bag-of-coal', '/img/bag-of-coal-2.png');
+		// scene.load.image('present', '/img/present-2.png');
+		// scene.load.spritesheet('right-left-child', '/img/rightleft-child-working.png', { frameWidth: 60, frameHeight: 60});
 	}
 
 	create() {
 		const scene = this.#game.scene.scenes[0];
-		scene.add.image(50, 50, this.#player.tagStNick);
+		this.#player.initialPosition();
+		this.#keyboard = this.#player.keyboardControls;
+		// const t = scene.add.image(100, 100, 'bag-of-coal');
 	}
 
-	update() {}
+	update() {
+		if (this.#keyboard.right.isDown) {
+			this.#player.moveRight();
+		} else if (this.#keyboard.left.isDown) {
+			this.#player.moveLeft();
+		}
+	}
 
 }

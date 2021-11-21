@@ -1,4 +1,3 @@
-import PhaserGame from "./phaser/PhaserGame.js";
 import Config from "../utilities/config.js";
 
 export default class Pitch {
