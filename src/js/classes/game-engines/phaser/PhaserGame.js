@@ -13,6 +13,13 @@ export default class PhaserGame {
 			preload: this.preload.bind(this),
 			create: this.create.bind(this),
 			update: this.update.bind(this)
+		},
+		physics: {
+			default: 'arcade',
+			arcade: {
+				debug: false,
+				gravity: false
+			}
 		}
 	};
 	#game = null;
@@ -27,8 +34,6 @@ export default class PhaserGame {
 	preload() {
 		const scene = this.#game.scene.scenes[0];
 		this.#player.load(scene);
-		// scene.load.image('bag-of-coal', '/img/bag-of-coal-2.png');
-		// scene.load.image('present', '/img/present-2.png');
 		// scene.load.spritesheet('right-left-child', '/img/rightleft-child-working.png', { frameWidth: 60, frameHeight: 60});
 	}
 
@@ -36,7 +41,9 @@ export default class PhaserGame {
 		const scene = this.#game.scene.scenes[0];
 		this.#player.initialPosition();
 		this.#keyboard = this.#player.keyboardControls;
-		// const t = scene.add.image(100, 100, 'bag-of-coal');
+		scene.physics.world.on('worldbounds', (event) => {
+			console.log(event);
+		});
 	}
 
 	update() {
@@ -44,6 +51,11 @@ export default class PhaserGame {
 			this.#player.moveRight();
 		} else if (this.#keyboard.left.isDown) {
 			this.#player.moveLeft();
+		}
+		if (this.#keyboard.space.isDown) {
+			this.#player.launch(Player.COAL);
+		} else if (this.#keyboard.shift.isDown) {
+			this.#player.launch(Player.PRESENT);
 		}
 	}
 

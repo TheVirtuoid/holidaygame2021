@@ -1,10 +1,13 @@
 import Config from "../../../utilities/config.js";
 
 export default class Avatar {
+
+	static AMMO_VELOCITY = Config.AMMO_SPEED * -1;
 	#tag = '';
 	#name = '';
 	#image = null;
 	#scene = null;
+	#sprite = false;
 	#position = {
 		x: 0,
 		y: 0
@@ -12,10 +15,11 @@ export default class Avatar {
 	constructor(args) {
 		this.#tag = args?.tag || this.#tag;
 		this.#name = args?.name || this.#name;
+		this.#sprite = args?.sprite ? args.sprite : false;
 	}
 
 	get imageData () {
-		return { tag: this.#tag, name: this.#name }
+		return { tag: this.#tag, name: this.#name, position: this.#position }
 	}
 
 	load(scene) {
@@ -27,7 +31,13 @@ export default class Avatar {
 
 	moveTo(x, y) {
 		if (!this.#image) {
-			this.#image = this.#scene.add.image(x, y, this.#tag);
+			if (!this.#sprite) {
+				this.#image = this.#scene.add.image(x, y, this.#tag);
+			} else {
+				this.#image = this.#scene.physics.add.sprite(x, y, this.#tag);
+				this.#image.body.setAllowGravity(false);
+				this.#image.setCollideWorldBounds(true);
+			}
 			this.#image.setOrigin(0, 0);
 		}
 		this.#image.setX(x);
@@ -41,6 +51,10 @@ export default class Avatar {
 
 	moveRight() {
 		this.moveTo(this.#position.x + Config.PLAYER_SPEED, this.#position.y);
+	}
+
+	fire() {
+		this.#image.setVelocity(0, Avatar.AMMO_VELOCITY);
 	}
 
 }
