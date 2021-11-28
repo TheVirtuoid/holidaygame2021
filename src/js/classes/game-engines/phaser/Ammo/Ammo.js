@@ -1,27 +1,34 @@
-export default class Ammo {
+import Avatar from "../Avatars/Avatar.js";
+import Config from "../../../utilities/config.js";
 
-	#image = null;
+export default class Ammo extends Avatar{
+
+	static AMMO_VELOCITY = Config.AMMO_SPEED * -1;
+	#inTransit = false;
 
 	constructor(args) {
-		if (args?.image) {
-			this.#image = new args.image();
+		args.sprite = true;
+		super(args);
+	}
+
+	fire(x, y) {
+		if (!this.#inTransit) {
+			this.moveTo(x, y);
+			this.setVisible(true);
+			this.setVelocity(0, Ammo.AMMO_VELOCITY);
+			this.#inTransit = true;
 		}
 	}
 
-	load(scene) {
-		this.#image.load(scene);
+	checkCollision() {
+		const ceiling = this.onCeiling();
+		const child = null;
+		return { ceiling, child };
 	}
 
-	moveTo(x, y) {
-		this.#image.moveTo(x, y);
-	}
-
-	fire() {
-		this.#image.fire();
-	}
-
-	get imageData() {
-		return this.#image.imageData;
+	ceaseFire() {
+		this.#inTransit = false;
+		this.setVisible(false);
 	}
 
 }

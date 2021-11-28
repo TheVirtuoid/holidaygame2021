@@ -1,5 +1,4 @@
 import Ammo from "./Ammo.js";
-import Present from "../Avatars/Present.js";
 
 export default class PresentAmmo extends Ammo {
 
@@ -7,6 +6,6 @@ export default class PresentAmmo extends Ammo {
 	static PRESENTAMMO_WIDTH = 20;
 
 	constructor() {
-		super({ image: Present });
+		super({ tag: 'present', name: '/img/present-2.png' });
 	}
 }

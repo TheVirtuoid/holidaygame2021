@@ -19,10 +19,6 @@ export default class Player {
 	static STNICK_WIDTH = 34;
 	static KRAMPUS_WIDTH = 53;
 	static AVATAR_GAP = 75;
-	static PRESENT_HEIGHT = PresentAmmo.PRESENTAMMO_HEIGHT;
-	static PRESENT_WIDTH = PresentAmmo.PRESENTAMMO_WIDTH;
-	static COAL_WIDTH = CoalAmmo.COALAMMO_WIDTH;
-	static COAL_HEIGHT = CoalAmmo.COALAMMO_HEIGHT;
 	static LIMIT_LEFT = Config.PLAYER_SPEED;
 	static LIMIT_RIGHT = Config.WIDTH - Player.AVATAR_GAP - Player.KRAMPUS_WIDTH - Config.PLAYER_SPEED;
 	static PLAYER_WIDTH = Player.STNICK_WIDTH + Player.AVATAR_GAP + Player.KRAMPUS_WIDTH;
@@ -63,12 +59,20 @@ export default class Player {
 		return this.#keyboard;
 	}
 
+	get present () {
+		return this.#presentAmmo;
+	}
+
 	load(scene) {
 		this.#stnick.load(scene);
 		this.#krampus.load(scene);
 		this.#presentAmmo.load(scene);
 		this.#coalAmmo.load(scene);
 		this.#keyboard = scene.input.keyboard.createCursorKeys();
+		scene.input.on('pointerdown', (pointer, objects) => {
+			console.log(pointer);
+			console.log(objects);
+		});
 	}
 
 	moveTo(x, y) {
@@ -98,13 +102,20 @@ export default class Player {
 	launch(type) {
 		switch (type) {
 			case Player.PRESENT:
-				this.#presentAmmo.moveTo(this.#position.x + Player.STNICK_WIDTH / 2, Player.PRESENT_LAUNCH_Y);
-				this.#presentAmmo.fire();
+				this.#presentAmmo.fire(this.#position.x + Player.STNICK_WIDTH / 2, Player.PRESENT_LAUNCH_Y);
 				break;
 			case Player.COAL:
-				this.#coalAmmo.moveTo(this.#position.x + Player.AVATAR_GAP + Player.KRAMPUS_WIDTH / 2, Player.COAL_LAUNCH_Y);
-				this.#coalAmmo.fire();
+				this.#coalAmmo.fire(this.#position.x + Player.AVATAR_GAP + Player.KRAMPUS_WIDTH / 2, Player.COAL_LAUNCH_Y);
 				break;
+		}
+	}
+
+	checkAmmoStatus() {
+		if (this.#presentAmmo.checkCollision().ceiling) {
+			this.#presentAmmo.ceaseFire();
+		}
+		if (this.#coalAmmo.checkCollision().ceiling) {
+			this.#coalAmmo.ceaseFire();
 		}
 	}
 

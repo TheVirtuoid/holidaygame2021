@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import Config from "../../utilities/config.js";
 import Player from "./Player/Player.js";
+import TargetEngine from "./Targets/TargetEngine.js";
 
 export default class PhaserGame {
 
@@ -25,15 +26,18 @@ export default class PhaserGame {
 	#game = null;
 	#player = new Player();
 	#keyboard = null;
+	#targetEngine = null;
 
 	constructor(gameConfig) {
 		this.#config = {...this.#config, ...gameConfig };
 		this.#game = new Phaser.Game(this.#config);
+		this.#targetEngine = new TargetEngine();
 	}
 
 	preload() {
 		const scene = this.#game.scene.scenes[0];
 		this.#player.load(scene);
+		this.#targetEngine.load(scene);
 		// scene.load.spritesheet('right-left-child', '/img/rightleft-child-working.png', { frameWidth: 60, frameHeight: 60});
 	}
 
@@ -41,9 +45,18 @@ export default class PhaserGame {
 		const scene = this.#game.scene.scenes[0];
 		this.#player.initialPosition();
 		this.#keyboard = this.#player.keyboardControls;
-		scene.physics.world.on('worldbounds', (event) => {
-			console.log(event);
+		this.#targetEngine.start();
+		// const child = scene.add.sprite(100, 200, 'right-left-child');
+/*
+		scene.anims.create({
+			key: 'left',
+			frames: scene.anims.generateFrameNumbers('right-left-child', { start: 0, end: 3 }),
+			frameRate: 5,
+			repeat: -1
 		});
+*/
+		// child.play('left');
+
 	}
 
 	update() {
@@ -57,6 +70,8 @@ export default class PhaserGame {
 		} else if (this.#keyboard.shift.isDown) {
 			this.#player.launch(Player.PRESENT);
 		}
+		this.#player.checkAmmoStatus();
+		this.#targetEngine.checkCollisions();
 	}
 
 }
