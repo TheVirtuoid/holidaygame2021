@@ -8,4 +8,5 @@ export default class CoalAmmo extends Ammo {
 	constructor() {
 		super({ tag: 'coal', name: '/img/bag-of-coal-2.png' });
 	}
+
 }

@@ -35,6 +35,10 @@ export default class Avatar {
 		return this.#tag;
 	}
 
+	getImage() {
+		return this.#image;
+	}
+
 	getAnimatedParams() {
 		return this.#animatedParams;
 	}

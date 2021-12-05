@@ -14,6 +14,7 @@ export default class Player {
 		x: 0,
 		y: 0
 	}
+	#targetEngine = null;
 
 	static AVATAR_HEIGHT = 80;
 	static STNICK_WIDTH = 34;
@@ -24,8 +25,9 @@ export default class Player {
 	static PLAYER_WIDTH = Player.STNICK_WIDTH + Player.AVATAR_GAP + Player.KRAMPUS_WIDTH;
 	static PRESENT_LAUNCH_Y = Config.HEIGHT - Player.AVATAR_HEIGHT;
 	static COAL_LAUNCH_Y = Config.HEIGHT - Player.AVATAR_HEIGHT;
-	static PRESENT = 0;
-	static COAL = 1;
+	static PRESENT = 1;
+	static COAL = 2;
+	static NO_COLLISION = 0;
 
 	constructor() {}
 
@@ -63,16 +65,16 @@ export default class Player {
 		return this.#presentAmmo;
 	}
 
+	get coal () {
+		return this.#coalAmmo;
+	}
+
 	load(scene) {
 		this.#stnick.load(scene);
 		this.#krampus.load(scene);
 		this.#presentAmmo.load(scene);
 		this.#coalAmmo.load(scene);
 		this.#keyboard = scene.input.keyboard.createCursorKeys();
-		scene.input.on('pointerdown', (pointer, objects) => {
-			console.log(pointer);
-			console.log(objects);
-		});
 	}
 
 	moveTo(x, y) {
@@ -103,9 +105,11 @@ export default class Player {
 		switch (type) {
 			case Player.PRESENT:
 				this.#presentAmmo.fire(this.#position.x + Player.STNICK_WIDTH / 2, Player.PRESENT_LAUNCH_Y);
+				this.#targetEngine.setCollisionPresent()
 				break;
 			case Player.COAL:
 				this.#coalAmmo.fire(this.#position.x + Player.AVATAR_GAP + Player.KRAMPUS_WIDTH / 2, Player.COAL_LAUNCH_Y);
+				this.#targetEngine.setCollisionCoal();
 				break;
 		}
 	}
@@ -117,6 +121,10 @@ export default class Player {
 		if (this.#coalAmmo.checkCollision().ceiling) {
 			this.#coalAmmo.ceaseFire();
 		}
+	}
+
+	setTargetEngine(targetEngine) {
+		this.#targetEngine = targetEngine;
 	}
 
 }

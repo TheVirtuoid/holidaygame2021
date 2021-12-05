@@ -11,6 +11,14 @@ export default class Ammo extends Avatar{
 		super(args);
 	}
 
+	load(scene) {
+		super.load(scene);
+	}
+
+	get image() {
+		return this.getImage();
+	}
+
 	fire(x, y) {
 		if (!this.#inTransit) {
 			this.moveTo(x, y);

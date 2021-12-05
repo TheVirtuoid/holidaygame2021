@@ -24,14 +24,14 @@ export default class PhaserGame {
 		}
 	};
 	#game = null;
-	#player = new Player();
+	#player = new Player(this);
 	#keyboard = null;
 	#targetEngine = null;
 
 	constructor(gameConfig) {
 		this.#config = {...this.#config, ...gameConfig };
 		this.#game = new Phaser.Game(this.#config);
-		this.#targetEngine = new TargetEngine();
+		this.#targetEngine = new TargetEngine(this.#player);
 	}
 
 	preload() {
