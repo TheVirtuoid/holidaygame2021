@@ -6,7 +6,6 @@ export default class Pitch {
 		width: Config.WIDTH,
 		engine: null
 	};
-	#engine = null;
 	#field = null;
 
 	constructor(config) {

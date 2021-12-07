@@ -25,7 +25,6 @@ export default class PhaserGame {
 	};
 	#game = null;
 	#player = new Player(this);
-	#keyboard = null;
 	#targetEngine = null;
 
 	constructor(gameConfig) {
@@ -44,7 +43,6 @@ export default class PhaserGame {
 	create() {
 		const scene = this.#game.scene.scenes[0];
 		this.#player.initialPosition();
-		this.#keyboard = this.#player.keyboardControls;
 		this.#targetEngine.start();
 		// const child = scene.add.sprite(100, 200, 'right-left-child');
 /*
@@ -60,18 +58,8 @@ export default class PhaserGame {
 	}
 
 	update() {
-		if (this.#keyboard.right.isDown) {
-			this.#player.moveRight();
-		} else if (this.#keyboard.left.isDown) {
-			this.#player.moveLeft();
-		}
-		if (this.#keyboard.space.isDown) {
-			this.#player.launch(Player.COAL);
-		} else if (this.#keyboard.shift.isDown) {
-			this.#player.launch(Player.PRESENT);
-		}
-		this.#player.checkAmmoStatus();
-		this.#targetEngine.checkCollisions();
+		this.#player.update();
+		this.#targetEngine.update();
 	}
 
 }

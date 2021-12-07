@@ -1,6 +1,6 @@
 import PhaserGame from "../game-engines/phaser/PhaserGame.js";
 import Config from "../utilities/config.js";
-import Pitch from "../game-engines/Pitch.js";
+import Pitch from "../pitch/Pitch.js";
 
 export default class Scene {
 	#width = Config.WIDTH;

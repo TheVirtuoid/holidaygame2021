@@ -57,10 +57,6 @@ export default class Player {
 		return Player.AVATAR_HEIGHT;
 	}
 
-	get keyboardControls () {
-		return this.#keyboard;
-	}
-
 	get present () {
 		return this.#presentAmmo;
 	}
@@ -125,6 +121,20 @@ export default class Player {
 
 	setTargetEngine(targetEngine) {
 		this.#targetEngine = targetEngine;
+	}
+
+	update() {
+		if (this.#keyboard.right.isDown) {
+			this.moveRight();
+		} else if (this.#keyboard.left.isDown) {
+			this.moveLeft();
+		}
+		if (this.#keyboard.space.isDown) {
+			this.launch(Player.COAL);
+		} else if (this.#keyboard.shift.isDown) {
+			this.launch(Player.PRESENT);
+		}
+		this.checkAmmoStatus();
 	}
 
 }
