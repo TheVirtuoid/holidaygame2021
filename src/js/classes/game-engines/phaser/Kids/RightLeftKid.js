@@ -3,16 +3,17 @@ import Config from "../../../utilities/config.js";
 
 export default class RightLeftKid extends Kid {
 
-	static KID_WIDTH = 39;
-	static KID_HEIGHT = 58;
-	static START_X = Config.WIDTH - RightLeftKid.KID_WIDTH;
+	static START_X = Config.WIDTH - Kid.KID_WIDTH;
+	static END_X = 0 - Kid.KID_WIDTH;
 
-	constructor() {
-		super({ tag: `right-left-kid`, name: '/img/rightleft-child-2.png',
+	constructor(type = Kid.KID_TYPE_NICE) {
+		const name = type === Kid.KID_TYPE_NICE ? Kid.KIDS.RIGHT_LEFT.NICE.NAME : Kid.KIDS.RIGHT_LEFT.NAUGHTY.NAME;
+		const tag = type === Kid.KID_TYPE_NICE ? Kid.KIDS.RIGHT_LEFT.NICE.TAG : Kid.KIDS.RIGHT_LEFT.NAUGHTY.TAG;
+		super({ tag, name,
 			animatedParams: {
 				key: 'right',
-				frameWidth: RightLeftKid.KID_WIDTH,
-				frameHeight: RightLeftKid.KID_HEIGHT,
+				frameWidth: Kid.KID_WIDTH,
+				frameHeight: Kid.KID_HEIGHT,
 				start: 0,
 				end: 3,
 				frameRate: 5,
@@ -20,11 +21,12 @@ export default class RightLeftKid extends Kid {
 			},
 			direction: Kid.KID_DIRECTION_RIGHT
 		});
+		this.setType(type);
 	}
 
-	createImage(counter, type) {
+	createImage(counter) {
 		const x = RightLeftKid.START_X;
-		const y = RightLeftKid.KID_HEIGHT / 2 * Math.ceil(Math.random() * 6);
-		return super.createImage(x, y, counter, type);
+		const y = Kid.KID_HEIGHT / 2 * Math.ceil(Math.random() * 6);
+		return super.createImage(x, y, counter);
 	}
 }

@@ -8,6 +8,6 @@ export default class Config {
 	static AMMO_SPEED = 750;
 	static KID_SPEED = 50;
 	static SCORE_GOOD_HIT = 1;
-	static SCORE_BAD_HIT = 1;
-	static SCORE_BOUNDARY_HIT = 5;
+	static SCORE_BAD_HIT = -5;
+	static SCORE_BOUNDARY_HIT = -1;
 }

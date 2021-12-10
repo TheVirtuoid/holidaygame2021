@@ -1,5 +1,6 @@
 import Config from "../../../utilities/config";
 import Player from "../Player/Player.js";
+import Kid from "./Kid.js";
 
 export default class KidImage {
 	#image = null;
@@ -12,6 +13,10 @@ export default class KidImage {
 		this.#speed = speed;
 		this.#image = kid.createImage(counter, type);
 		this.#image.setData('kid', this);
+	}
+
+	get type () {
+		return this.#kid.getType();
 	}
 
 	getImage() {
@@ -32,9 +37,9 @@ export default class KidImage {
 	}
 
 	checkCollision() {
-		const wall = this.#image.body.onWall();
 		const ceiling = this.#image.body.onCeiling();
 		const floor = this.#image.body.onFloor();
+		const wall = this.#image.x <= Kid.OFF_PITCH_LEFT;
 		return { wall, ceiling, floor };
 	}
 }

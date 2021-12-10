@@ -7,6 +7,23 @@ export default class Kid extends Avatar {
 	static KID_DIRECTION_RIGHT = -1;
 	static KID_TYPE_NICE = 0;
 	static KID_TYPE_NAUGHTY = 1;
+	static KID_WIDTH = 39;
+	static KID_HEIGHT = 58;
+	static OFF_PITCH_LEFT = 0 - Kid.KID_WIDTH;
+	static OFF_PITCH_RIGHT = Config.WIDTH + Kid.KID_WIDTH;
+
+	static KIDS = {
+		RIGHT_LEFT: {
+			NICE: {
+				NAME: '/img/rightleft-child-2.png',
+				TAG: 'right-left-nice'
+			},
+			NAUGHTY: {
+				NAME: '/img/rightleft-child-naughty-2.png',
+				TAG: 'right-left-naughty'
+			}
+		}
+	}
 
 	#direction;
 	#type;
@@ -18,7 +35,7 @@ export default class Kid extends Avatar {
 		this.#direction = args?.direction || Kid.KID_DIRECTION_RIGHT;
 	}
 
-	createImage(x, y, counter, type) {
+	createImage(x, y, counter) {
 		const scene = this.getScene();
 		const image = scene.physics.add.sprite(x, y, this.getTag());
 		image.body.setAllowGravity(false);
@@ -41,6 +58,10 @@ export default class Kid extends Avatar {
 
 	setType(type) {
 		this.#type = type;
+	}
+
+	getType() {
+		return this.#type;
 	}
 
 }

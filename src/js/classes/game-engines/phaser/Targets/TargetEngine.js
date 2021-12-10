@@ -11,7 +11,8 @@ export default class TargetEngine {
 	#timing = 5000;
 	#scene = null;
 	#counter = 0;
-	#rightLeftChild = new RightLeftKid();
+	#rightLeftChild = new RightLeftKid(Kid.KID_TYPE_NICE);
+	#rightLeftChildNaughty = new RightLeftKid(Kid.KID_TYPE_NAUGHTY);
 	#leftRightChild = null;
 	#player = null;
 	#childGroup = null;
@@ -21,7 +22,7 @@ export default class TargetEngine {
 	#collisionCoal = null;
 	#collisionPresent = null;
 
-	#kidCounter = 15;
+	#kidCounter = 40;
 	#score = null;
 
 	constructor(player, scoring) {
@@ -38,9 +39,7 @@ export default class TargetEngine {
 	setCollisionCoal() {
 		if (!this.#collisionCoal) {
 			this.#collisionCoal = this.#scene.physics.add.collider(this.#player.coal.image, this.#childGroup, (coal, kid) => {
-				this.removeTarget(kid);
-				this.#player.ceaseFire(Player.COAL);
-				this.#score.addGameScore(1);
+				this.processCollision(Player.COAL, kid, Kid.KID_TYPE_NAUGHTY);
 			});
 		}
 	}
@@ -48,22 +47,33 @@ export default class TargetEngine {
 	setCollisionPresent() {
 		if (!this.#collisionPresent) {
 			this.#collisionPresent = this.#scene.physics.add.collider(this.#player.present.image, this.#childGroup, (coal, kid) => {
-				this.removeTarget(kid);
-				this.#player.ceaseFire(Player.PRESENT);
-				this.#score.addGameScore(1);
+				this.processCollision(Player.PRESENT, kid, Kid.KID_TYPE_NICE)
 			});
 		}
+	}
+
+	processCollision(collisionType, kid, kidTypeComparison) {
+		this.#player.ceaseFire(collisionType);
+		if (kid.getData('kid').type == kidTypeComparison) {
+			this.#score.addGameScore(Config.SCORE_GOOD_HIT);
+		} else {
+			this.#score.addHealthScore(Config.SCORE_BAD_HIT);
+		}
+		this.removeTarget(kid);
 	}
 
 	load(scene) {
 		this.#scene = scene;
 		this.#childGroup = this.#scene.physics.add.group({ allowGravity: false });
 		this.#rightLeftChild.load(scene);
+		this.#rightLeftChildNaughty.load(scene);
 	}
 
 	start(player) {
-		this.#timing = 1000;
 		this.#targets.clear();
+		this.#score.clearGameScore();
+		this.#score.clearHealthScore();
+		this.#score.addHealthScore(100);
 		setTimeout(this.newTarget.bind(this), this.#timing);
 	}
 
@@ -71,10 +81,11 @@ export default class TargetEngine {
 		this.#timing -= 50;
 		this.#counter++;
 		const type = Math.random() >= .5 ? Kid.KID_TYPE_NAUGHTY : Kid.KID_TYPE_NICE;
-		const speed = Config.KID_SPEED * this.#rightLeftChild.getDirection() * Math.floor(Math.random() * 5);
+		const kidType = type === Kid.KID_TYPE_NICE ? this.#rightLeftChild : this.#rightLeftChildNaughty;
+		const speed = Config.KID_SPEED * kidType.getDirection() * Math.floor(Math.random() * 5);
 
 		const kid = new KidImage({
-			kid: this.#rightLeftChild,
+			kid: kidType,
 			counter: this.#counter,
 			type,
 			speed
@@ -91,6 +102,7 @@ export default class TargetEngine {
 	removeTarget(kid) {
 		const targetKid = kid.getData('kid');
 		targetKid.stop();
+		kid.destroy();
 		this.#targets.delete(targetKid);
 	}
 
@@ -99,11 +111,9 @@ export default class TargetEngine {
 			const collisions = kid.checkCollision();
 			if (collisions.wall) {
 				kid.stop();
+				kid.getImage().destroy();
 				this.#targets.delete(kid);
-//				const kidCollision = this.#colliderMap.get(kid);
-//				kidCollision.collisionCoal.destroy();
-//				kidCollision.collisionPresent.destroy();
-//				this.#colliderMap.delete(kid);
+				this.#score.addHealthScore(Config.SCORE_BOUNDARY_HIT);
 			}
 		});
 	}
