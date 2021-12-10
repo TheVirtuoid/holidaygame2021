@@ -3,6 +3,7 @@ import Kid from "../Kids/Kid.js";
 import KidImage from "../Kids/KidImage.js";
 import Config from "../../../utilities/config.js";
 import Player from "../Player/Player.js";
+import Scoring from "../../../scoring/Scoring.js";
 
 export default class TargetEngine {
 
@@ -21,10 +22,13 @@ export default class TargetEngine {
 	#collisionPresent = null;
 
 	#kidCounter = 15;
+	#score = null;
 
-	constructor(player) {
+	constructor(player, scoring) {
 		this.#player = player;
 		this.#player.setTargetEngine(this);
+		const { highScoreDom, gameScoreDom, healthScoreDom } = scoring;
+		this.#score = new Scoring({ highScoreDom, gameScoreDom, healthScoreDom });
 	}
 
 	get kidGroup () {
@@ -34,9 +38,9 @@ export default class TargetEngine {
 	setCollisionCoal() {
 		if (!this.#collisionCoal) {
 			this.#collisionCoal = this.#scene.physics.add.collider(this.#player.coal.image, this.#childGroup, (coal, kid) => {
-				const targetKid = kid.getData('kid');
-				targetKid.stop();
-				this.#targets.delete(targetKid);
+				this.removeTarget(kid);
+				this.#player.ceaseFire(Player.COAL);
+				this.#score.addGameScore(1);
 			});
 		}
 	}
@@ -44,7 +48,9 @@ export default class TargetEngine {
 	setCollisionPresent() {
 		if (!this.#collisionPresent) {
 			this.#collisionPresent = this.#scene.physics.add.collider(this.#player.present.image, this.#childGroup, (coal, kid) => {
-				console.log('-----collided with present');
+				this.removeTarget(kid);
+				this.#player.ceaseFire(Player.PRESENT);
+				this.#score.addGameScore(1);
 			});
 		}
 	}
@@ -80,6 +86,12 @@ export default class TargetEngine {
 		if (this.#kidCounter > 0) {
 			setTimeout(this.newTarget.bind(this), this.#timing);
 		}
+	}
+
+	removeTarget(kid) {
+		const targetKid = kid.getData('kid');
+		targetKid.stop();
+		this.#targets.delete(targetKid);
 	}
 
 	checkCollisions() {

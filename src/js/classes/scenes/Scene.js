@@ -10,12 +10,18 @@ export default class Scene {
 	html = '';
 	#engine = null;
 	#pitch = null;
+	#highScoreDom = null;
+	#gameScoreDom = null;
+	#healthScoreDom = null;
 
 	constructor (args) {
 		this.#width = args?.width || this.#width;
 		this.#height = args?.height || this.#height;
 		this.#anchorPoint = args?.anchorPoint || this.#anchorPoint;
 		this.#engine = args?.engine || this.#engine;
+		this.#gameScoreDom = args?.gameScoreDom || this.#gameScoreDom;
+		this.#highScoreDom = args?.highScoreDom || this.#highScoreDom;
+		this.#healthScoreDom = args?.healthScoreDom || this.#healthScoreDom;
 	}
 
 	toConfig() {
@@ -25,6 +31,9 @@ export default class Scene {
 			anchorPoint: this.#anchorPoint,
 			engine: this.#engine,
 			parent: this.#anchorPoint,
+			gameScoreDom: this.#gameScoreDom,
+			highScoreDom: this.#highScoreDom,
+			healthScoreDom: this.#healthScoreDom,
 			physics: {
 				default: 'arcade',
 				arcade: {

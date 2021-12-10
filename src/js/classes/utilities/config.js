@@ -4,7 +4,7 @@ export default class Config {
 	static ROTATING_SCREENS_TIMER = 5000;
 	static ROTATING_SCREENS_ORDER = ['main', 'high-score', 'instructions'];
 	static ANCHOR_POINT = 'pitch';
-	static PLAYER_SPEED = 2.5;
+	static PLAYER_SPEED = 6;
 	static AMMO_SPEED = 750;
 	static KID_SPEED = 50;
 	static SCORE_GOOD_HIT = 1;

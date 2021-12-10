@@ -30,7 +30,11 @@ export default class PhaserGame {
 	constructor(gameConfig) {
 		this.#config = {...this.#config, ...gameConfig };
 		this.#game = new Phaser.Game(this.#config);
-		this.#targetEngine = new TargetEngine(this.#player);
+		this.#targetEngine = new TargetEngine(this.#player, {
+			highScoreDom: this.#config.highScoreDom,
+			gameScoreDom: this.#config.gameScoreDom,
+			healthScoreDom: this.#config.healthScoreDom
+		});
 	}
 
 	preload() {

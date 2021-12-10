@@ -20,8 +20,8 @@ export default class Player {
 	static STNICK_WIDTH = 34;
 	static KRAMPUS_WIDTH = 53;
 	static AVATAR_GAP = 75;
-	static LIMIT_LEFT = Config.PLAYER_SPEED;
-	static LIMIT_RIGHT = Config.WIDTH - Player.AVATAR_GAP - Player.KRAMPUS_WIDTH - Config.PLAYER_SPEED;
+	static LIMIT_LEFT = Config.PLAYER_SPEED - Player.AVATAR_GAP;
+	static LIMIT_RIGHT = Config.WIDTH - Player.STNICK_WIDTH - Config.PLAYER_SPEED;
 	static PLAYER_WIDTH = Player.STNICK_WIDTH + Player.AVATAR_GAP + Player.KRAMPUS_WIDTH;
 	static PRESENT_LAUNCH_Y = Config.HEIGHT - Player.AVATAR_HEIGHT;
 	static COAL_LAUNCH_Y = Config.HEIGHT - Player.AVATAR_HEIGHT;
@@ -108,6 +108,11 @@ export default class Player {
 				this.#targetEngine.setCollisionCoal();
 				break;
 		}
+	}
+
+	ceaseFire(type) {
+		const ammo = type === Player.PRESENT ? this.#presentAmmo : this.#coalAmmo;
+		ammo.ceaseFire();
 	}
 
 	checkAmmoStatus() {

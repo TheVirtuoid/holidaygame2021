@@ -16,6 +16,9 @@ export default class Game {
 	#actionButtonStart = document.getElementById('action-start');
 	#actionButtonPause = document.getElementById('action-pause');
 	#actionButtonEnd = document.getElementById('action-end');
+	#gameScoreDom = document.getElementById('game-score');
+	#highScoreDom = document.getElementById('high-score');
+	#healthScoreDom = document.getElementById('health-score');
 
 	constructor(args) {
 		const anchorPoint = Config.ANCHOR_POINT;
@@ -23,7 +26,13 @@ export default class Game {
 		this.#main = new Main({ anchorPoint });
 		this.#instructions = new Instructions({ anchorPoint });
 		this.#highScore = new HighScore({ anchorPoint });
-		this.#play = new Play({ anchorPoint, engine });
+		this.#play = new Play({
+			anchorPoint,
+			engine,
+			gameScoreDom: this.#gameScoreDom,
+			highScoreDom: this.#highScoreDom,
+			healthScoreDom: this.#healthScoreDom
+		});
 		this.#rotatingScreens.set('main', this.#main);
 		this.#rotatingScreens.set('instructions', this.#instructions);
 		this.#rotatingScreens.set('high-score', this.#highScore);
