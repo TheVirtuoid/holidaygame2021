@@ -28,4 +28,5 @@ export default class Play extends Scene {
 	pause () {
 
 	}
+
 }

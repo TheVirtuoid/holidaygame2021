@@ -24,6 +24,7 @@ export default class TargetEngine {
 
 	#kidCounter = 40;
 	#score = null;
+	#gameOver = false;
 
 	constructor(player, scoring) {
 		this.#player = player;
@@ -73,7 +74,8 @@ export default class TargetEngine {
 		this.#targets.clear();
 		this.#score.clearGameScore();
 		this.#score.clearHealthScore();
-		this.#score.addHealthScore(100);
+		this.#score.addHealthScore(Config.STARTING_HEALTH);
+		this.#gameOver = false;
 		setTimeout(this.newTarget.bind(this), this.#timing);
 	}
 
@@ -82,7 +84,7 @@ export default class TargetEngine {
 		this.#counter++;
 		const type = Math.random() >= .5 ? Kid.KID_TYPE_NAUGHTY : Kid.KID_TYPE_NICE;
 		const kidType = type === Kid.KID_TYPE_NICE ? this.#rightLeftChild : this.#rightLeftChildNaughty;
-		const speed = Config.KID_SPEED * kidType.getDirection() * Math.floor(Math.random() * 5);
+		const speed = Config.KID_SPEED * kidType.getDirection() * Math.ceil(Math.random() * 5);
 
 		const kid = new KidImage({
 			kid: kidType,
@@ -118,7 +120,18 @@ export default class TargetEngine {
 		});
 	}
 
+	stop () {
+		this.#gameOver = true;
+	}
+
 	update() {
+		if (this.#score.healthScore <= 0) {
+			this.stop();
+		}
 		this.checkCollisions();
+	}
+
+	isGameOver() {
+		return this.#gameOver;
 	}
 }

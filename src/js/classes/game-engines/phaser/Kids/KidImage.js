@@ -24,8 +24,8 @@ export default class KidImage {
 	}
 
 	run() {
-		this.#image.setVisible(true);
 		this.#image.setVelocityX(this.#speed);
+		this.#image.setVisible(true);
 	}
 
 	stop() {

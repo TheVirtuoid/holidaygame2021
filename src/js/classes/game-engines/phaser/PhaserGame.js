@@ -41,29 +41,26 @@ export default class PhaserGame {
 		const scene = this.#game.scene.scenes[0];
 		this.#player.load(scene);
 		this.#targetEngine.load(scene);
-		// scene.load.spritesheet('right-left-child', '/img/rightleft-child-working.png', { frameWidth: 60, frameHeight: 60});
 	}
 
 	create() {
 		const scene = this.#game.scene.scenes[0];
 		this.#player.initialPosition();
 		this.#targetEngine.start();
-		// const child = scene.add.sprite(100, 200, 'right-left-child');
-/*
-		scene.anims.create({
-			key: 'left',
-			frames: scene.anims.generateFrameNumbers('right-left-child', { start: 0, end: 3 }),
-			frameRate: 5,
-			repeat: -1
-		});
-*/
-		// child.play('left');
 
 	}
 
 	update() {
 		this.#player.update();
 		this.#targetEngine.update();
+		if (this.#targetEngine.isGameOver()) {
+			this.finished();
+		}
+	}
+
+	finished() {
+		this.#game.destroy();
+		document.dispatchEvent(new CustomEvent('game-over', {}));
 	}
 
 }

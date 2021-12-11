@@ -10,4 +10,5 @@ export default class Config {
 	static SCORE_GOOD_HIT = 1;
 	static SCORE_BAD_HIT = -5;
 	static SCORE_BOUNDARY_HIT = -1;
+	static STARTING_HEALTH = 20;
 }
