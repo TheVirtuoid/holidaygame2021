@@ -39,7 +39,7 @@ export default class KidImage {
 	checkCollision() {
 		const ceiling = this.#image.body.onCeiling();
 		const floor = this.#image.body.onFloor();
-		const wall = this.#image.x <= Kid.OFF_PITCH_LEFT;
+		const wall = this.#image.x <= Kid.OFF_PITCH_LEFT || this.#image.x >= Kid.OFF_PITCH_RIGHT;
 		return { wall, ceiling, floor };
 	}
 }
