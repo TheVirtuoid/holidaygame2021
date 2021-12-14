@@ -22,6 +22,16 @@ export default class Kid extends Avatar {
 				NAME: '/img/rightleft-child-naughty-2.png',
 				TAG: 'right-left-naughty'
 			}
+		},
+		LEFT_RIGHT: {
+			NICE: {
+				NAME: '/img/leftright-child-2.png',
+				TAG: 'left-right-nice'
+			},
+			NAUGHTY: {
+				NAME: '/img/leftright-child-naughty-2.png',
+				TAG: 'left-right-naughty'
+			}
 		}
 	}
 

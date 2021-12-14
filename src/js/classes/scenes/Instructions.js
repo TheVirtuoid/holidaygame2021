@@ -9,7 +9,7 @@ export default class Instructions extends Scene {
 				<li>Give presents to Nice kids, coal to Naughty kids.</li>
 				<li>St. Nicholas gives presents, Krampus gives coal.</li>
 				<li>You move St. Nicholas and Grampus by using the Arrow keys.</li>
-				<li>Use the XXX to shoot presents, YYY to shoot coal.</li>
+				<li>Use the 'Z' key to shoot presents, 'C' key to shoot coal.</li>
 				<li>Nice kids have greens shirts, Naughty kids have yellow shirts.</li>
 				<li>You get one Game point for each Present or Coal delivered.</li>
 				<li>You lose five Health points if a Nice kid gets coal, or a Naughty kid gets a present.</li>

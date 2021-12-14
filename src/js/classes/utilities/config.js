@@ -11,6 +11,6 @@ export default class Config {
 	static SCORE_GOOD_HIT = 1;
 	static SCORE_BAD_HIT = -5;
 	static SCORE_BOUNDARY_HIT = -1;
-	static STARTING_HEALTH = 20;
+	static STARTING_HEALTH = 100;
 	static HIGH_SCORE_KEY = 'krampus-night-high-scores';
 }

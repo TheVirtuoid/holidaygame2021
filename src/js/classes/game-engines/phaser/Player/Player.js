@@ -15,6 +15,7 @@ export default class Player {
 		y: 0
 	}
 	#targetEngine = null;
+	#fireKeys;
 
 	static AVATAR_HEIGHT = 80;
 	static STNICK_WIDTH = 34;
@@ -71,6 +72,10 @@ export default class Player {
 		this.#presentAmmo.load(scene);
 		this.#coalAmmo.load(scene);
 		this.#keyboard = scene.input.keyboard.createCursorKeys();
+		this.#fireKeys = scene.input.keyboard.addKeys({
+			z: Phaser.Input.Keyboard.KeyCodes.Z,
+			c: Phaser.Input.Keyboard.KeyCodes.C
+		});
 	}
 
 	moveTo(x, y) {
@@ -129,15 +134,15 @@ export default class Player {
 	}
 
 	update() {
+		if (this.#fireKeys.z.isDown) {
+			this.launch(Player.PRESENT);
+		} else if (this.#fireKeys.c.isDown) {
+			this.launch(Player.COAL);
+		}
 		if (this.#keyboard.right.isDown) {
 			this.moveRight();
 		} else if (this.#keyboard.left.isDown) {
 			this.moveLeft();
-		}
-		if (this.#keyboard.space.isDown) {
-			this.launch(Player.COAL);
-		} else if (this.#keyboard.shift.isDown) {
-			this.launch(Player.PRESENT);
 		}
 		this.checkAmmoStatus();
 	}
