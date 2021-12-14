@@ -23,6 +23,8 @@ export default class TargetEngine {
 	#presentAmmo = null;
 	#collisionCoal = null;
 	#collisionPresent = null;
+	#ding;
+	#buzz;
 
 	#kidCounter = 40;
 	#score = null;
@@ -58,8 +60,10 @@ export default class TargetEngine {
 	processCollision(collisionType, kid, kidTypeComparison) {
 		this.#player.ceaseFire(collisionType);
 		if (kid.getData('kid').type == kidTypeComparison) {
+			this.#ding.play();
 			this.#score.addGameScore(Config.SCORE_GOOD_HIT);
 		} else {
+			this.#buzz.play();
 			this.#score.addHealthScore(Config.SCORE_BAD_HIT);
 		}
 		this.removeTarget(kid);
@@ -72,6 +76,8 @@ export default class TargetEngine {
 		this.#rightLeftChildNaughty.load(scene);
 		this.#leftRightChild.load(scene);
 		this.#leftRightChildNaughty.load(scene);
+		this.#scene.load.audio('ding', ['/audio/ding.wav']);
+		this.#scene.load.audio('buzz', ['/audio/buzz.mp3']);
 	}
 
 	start(player) {
@@ -80,6 +86,8 @@ export default class TargetEngine {
 		this.#score.clearHealthScore();
 		this.#score.addHealthScore(Config.STARTING_HEALTH);
 		this.#gameOver = false;
+		this.#ding = this.#scene.sound.add('ding', { loop: false });
+		this.#buzz = this.#scene.sound.add('buzz', { loop: false });
 		setTimeout(this.newTarget.bind(this), this.#timing);
 	}
 
