@@ -2,7 +2,7 @@ import Main from "./scenes/Main.js";
 import HighScore from "./scenes/HighScore.js";
 import Instructions from "./scenes/Instructions.js";
 import Play from "./scenes/Play.js";
-import Config from "./utilities/config.js";
+import Config from "./config.js";
 import GameOver from "./scenes/GameOver.js";
 import HighScores from "./scoring/HighScores.js";
 import NewHighScore from "./scenes/NewHighScore.js";
@@ -20,8 +20,8 @@ export default class Game {
 	#rotatingScreensHandle;
 	#actionButtonList = document.getElementById('action-list');
 	#actionButtonStart = document.getElementById('action-start');
-	#actionButtonPause = document.getElementById('action-pause');
-	#actionButtonEnd = document.getElementById('action-end');
+	// #actionButtonPause = document.getElementById('action-pause');
+	// #actionButtonEnd = document.getElementById('action-end');
 	#gameScoreDom = document.getElementById('game-score');
 	#highScoreDom = document.getElementById('high-score');
 	#healthScoreDom = document.getElementById('health-score');
@@ -94,14 +94,14 @@ export default class Game {
 
 	showStartButton() {
 		this.#actionButtonStart.classList.remove('hide');
-		this.#actionButtonPause.classList.add('hide');
-		this.#actionButtonEnd.classList.add('hide');
+		// this.#actionButtonPause.classList.add('hide');
+		// this.#actionButtonEnd.classList.add('hide');
 	}
 
 	removeAllButtons() {
 		this.#actionButtonStart.classList.add('hide');
-		this.#actionButtonPause.classList.add('hide');
-		this.#actionButtonEnd.classList.add('hide');
+		// this.#actionButtonPause.classList.add('hide');
+		// this.#actionButtonEnd.classList.add('hide');
 	}
 
 	performAction(event) {
@@ -110,12 +110,13 @@ export default class Game {
 			case 'action-start':
 				this.stopRotatingScreens();
 				this.#actionButtonStart.classList.add('hide');
-				this.#actionButtonPause.classList.remove('hide');
-				this.#actionButtonEnd.classList.remove('hide');
+				// this.#actionButtonPause.classList.remove('hide');
+				// this.#actionButtonEnd.classList.remove('hide');
 				this.#main.asHtml(false);
 				document.addEventListener('game-over', this.gameOver.bind(this), { once: true });
 				this.#play.start();
 				break;
+/*
 			case 'action-pause':
 				if (this.#actionButtonPause.textContent === 'Resume') {
 					this.#actionButtonPause.textContent = 'Pause';
@@ -126,6 +127,7 @@ export default class Game {
 			case 'action-end':
 				this.startRotatingScreens();
 				break;
+*/
 			default:
 				break;
 		}

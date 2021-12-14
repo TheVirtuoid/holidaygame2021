@@ -1,6 +1,6 @@
 import StNicholas from "../Avatars/StNicholas.js";
 import Krampus from "../Avatars/Krampus.js";
-import Config from "../../../utilities/config.js";
+import Config from "../../../config.js";
 import PresentAmmo from "../Ammo/PresentAmmo.js";
 import CoalAmmo from "../Ammo/CoalAmmo.js";
 

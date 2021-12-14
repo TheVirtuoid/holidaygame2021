@@ -2,7 +2,7 @@ import RightLeftKid from "../Kids/RightLeftKid.js";
 import LeftRightKid from "../Kids/LeftRightKid.js";
 import Kid from "../Kids/Kid.js";
 import KidImage from "../Kids/KidImage.js";
-import Config from "../../../utilities/config.js";
+import Config from "../../../config.js";
 import Player from "../Player/Player.js";
 import Scoring from "../../../scoring/Scoring.js";
 

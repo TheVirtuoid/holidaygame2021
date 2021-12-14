@@ -1,4 +1,4 @@
-import Config from "../utilities/config";
+import Config from "../config";
 
 export default class HighScores {
 	#domSelector;

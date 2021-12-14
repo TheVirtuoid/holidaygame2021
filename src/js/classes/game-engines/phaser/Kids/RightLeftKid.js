@@ -1,5 +1,5 @@
 import Kid from "./Kid.js";
-import Config from "../../../utilities/config.js";
+import Config from "../../../config.js";
 
 export default class RightLeftKid extends Kid {
 

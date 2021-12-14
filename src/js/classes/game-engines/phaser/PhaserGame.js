@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import Config from "../../utilities/config.js";
+import Config from "../../config.js";
 import Player from "./Player/Player.js";
 import TargetEngine from "./Targets/TargetEngine.js";
 

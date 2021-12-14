@@ -1,4 +1,4 @@
-import Config from "../../../utilities/config";
+import Config from "../../../config";
 import Player from "../Player/Player.js";
 import Kid from "./Kid.js";
 

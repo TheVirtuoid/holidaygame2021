@@ -1,5 +1,5 @@
 import Avatar from "../Avatars/Avatar.js";
-import Config from "../../../utilities/config.js";
+import Config from "../../../config.js";
 
 export default class Kid extends Avatar {
 

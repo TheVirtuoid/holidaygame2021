@@ -1,5 +1,5 @@
 import PhaserGame from "../game-engines/phaser/PhaserGame.js";
-import Config from "../utilities/config.js";
+import Config from "../config.js";
 import Pitch from "../pitch/Pitch.js";
 
 export default class Scene {
