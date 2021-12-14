@@ -89,38 +89,114 @@ main {
   }
 }
 
+button {
+  margin: .5rem auto;
+  display: block;
+  min-width: 4rem;
+  border-width: 2px;
+  border-radius: 1rem;
+  border-color: transparent;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: .8rem;
+  cursor: pointer;
+
+  &.hide {
+    display: none;
+  }
+
+  &#action-start {
+    background-color: green;
+    color: yellow;
+  }
+
+  &#action-pause {
+    background-color: grey;
+    color: black;
+  }
+
+  &#action-end {
+    background-color: red;
+    color: white;
+  }
+
+  &#save-high-score {
+    background-color: green;
+    color: yellow;
+  }
+}
+
 #action-list {
   display: flex;
   justify-content: center;
+}
+
+.high-score {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  h2 {
+    color: red;
+    text-align: center;
+  }
+
+  ol {
+    margin-left: 3rem;
+    div {
+      display: flex;
+      flex-direction: row;
+      span {
+        padding-left: 1rem;
+        width: 3rem;
+        &:last-child {
+          text-align: right;
+        }
+      }
+    }
+  }
+}
+
+.new-high-score {
+  h2 {
+    color: green;
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 0rem;
+  }
+  #fake-input {
+    border: none;
+    color: transparent;
+    background-color: transparent;
+    &:focus-visible {
+      outline: none;
+    };
+  }
+  #initials {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: 4rem;
+    font-family: monospace;
+    span {
+      padding-right: 1rem;
+      &:last-child {
+        padding-right: 0;
+      }
+      &.active {
+        text-decoration: underline;
+      }
+    }
+    &.in-focus {
+      outline: 2px solid aqua;
+    }
+  }
+  p {
+    font-size: .6rem;
+    text-align: center;
+  }
   button {
-    margin: .5rem auto;
     display: block;
-    min-width: 4rem;
-    border-width: 2px;
-    border-radius: 1rem;
-    border-color: transparent;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: .8rem;
-    cursor: pointer;
-
-    &.hide {
-      display: none;
-    }
-
-    &#action-start {
-      background-color: green;
-      color: yellow;
-    }
-
-    &#action-pause {
-      background-color: grey;
-      color: black;
-    }
-
-    &#action-end {
-      background-color: red;
-      color: white;
-    }
+    margin: 0 auto;
   }
 }

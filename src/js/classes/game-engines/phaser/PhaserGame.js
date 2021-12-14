@@ -60,7 +60,7 @@ export default class PhaserGame {
 
 	finished() {
 		this.#game.destroy();
-		document.dispatchEvent(new CustomEvent('game-over', {}));
+		document.dispatchEvent(new CustomEvent('game-over', {detail: this.#targetEngine.getScore()}));
 	}
 
 }

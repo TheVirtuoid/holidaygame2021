@@ -4,6 +4,8 @@ import Instructions from "./scenes/Instructions.js";
 import Play from "./scenes/Play.js";
 import Config from "./utilities/config.js";
 import GameOver from "./scenes/GameOver.js";
+import HighScores from "./scoring/HighScores.js";
+import NewHighScore from "./scenes/NewHighScore.js";
 
 export default class Game {
 	#main;
@@ -11,6 +13,8 @@ export default class Game {
 	#instructions;
 	#play;
 	#gameOver;
+	#newHighScore;
+	#highScores = new HighScores();
 	#rotatingScreens = new Map();
 	#rotatingScreensOrder = Array.from(Config.ROTATING_SCREENS_ORDER);
 	#rotatingScreensHandle;
@@ -36,6 +40,7 @@ export default class Game {
 			highScoreDom: this.#highScoreDom,
 			healthScoreDom: this.#healthScoreDom
 		});
+		this.#newHighScore = new NewHighScore({ anchorPoint });
 		this.#rotatingScreens.set('main', this.#main);
 		this.#rotatingScreens.set('instructions', this.#instructions);
 		this.#rotatingScreens.set('high-score', this.#highScore);
@@ -65,14 +70,35 @@ export default class Game {
 	}
 
 	gameOver(event) {
-		this.showStartButton();
-		this.#actionButtonStart.classList.add('hide');
+		const score = event.detail;
+		this.removeAllButtons();
 		this.#gameOver.asHtml();
-		setInterval(this.startRotatingScreens.bind(this),  Config.ROTATING_SCREENS_TIMER);
+		setTimeout(processGameOver.bind(this),  Config.GAME_OVER_TIMER);
+
+		function processGameOver() {
+			if (this.#highScores.isHighScore(score)) {
+				this.displayHighScore(score);
+				document.addEventListener('done-high-score', this.startRotatingScreens.bind(this), { once: true });
+			} else {
+				this.startRotatingScreens();
+			}
+		}
+	}
+
+	displayHighScore(score) {
+		this.removeAllButtons();
+		this.#newHighScore.setScore(score);
+		this.#newHighScore.asHtml();
 	}
 
 	showStartButton() {
 		this.#actionButtonStart.classList.remove('hide');
+		this.#actionButtonPause.classList.add('hide');
+		this.#actionButtonEnd.classList.add('hide');
+	}
+
+	removeAllButtons() {
+		this.#actionButtonStart.classList.add('hide');
 		this.#actionButtonPause.classList.add('hide');
 		this.#actionButtonEnd.classList.add('hide');
 	}
@@ -97,9 +123,6 @@ export default class Game {
 				}
 				break;
 			case 'action-end':
-				this.#actionButtonStart.classList.remove('hide');
-				this.#actionButtonPause.classList.add('hide');
-				this.#actionButtonEnd.classList.add('hide');
 				this.startRotatingScreens();
 				break;
 			default:

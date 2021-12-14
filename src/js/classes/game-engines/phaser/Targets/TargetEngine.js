@@ -8,7 +8,7 @@ import Scoring from "../../../scoring/Scoring.js";
 export default class TargetEngine {
 
 	#targets = new Set();
-	#timing = 5000;
+	#timing = 1000;
 	#scene = null;
 	#counter = 0;
 	#rightLeftChild = new RightLeftKid(Kid.KID_TYPE_NICE);
@@ -80,24 +80,26 @@ export default class TargetEngine {
 	}
 
 	newTarget() {
-		this.#timing -= 50;
-		this.#counter++;
-		const type = Math.random() >= .5 ? Kid.KID_TYPE_NAUGHTY : Kid.KID_TYPE_NICE;
-		const kidType = type === Kid.KID_TYPE_NICE ? this.#rightLeftChild : this.#rightLeftChildNaughty;
-		const speed = Config.KID_SPEED * kidType.getDirection() * Math.ceil(Math.random() * 5);
+		if (!this.#gameOver) {
+			this.#timing -= 50;
+			this.#counter++;
+			const type = Math.random() >= .5 ? Kid.KID_TYPE_NAUGHTY : Kid.KID_TYPE_NICE;
+			const kidType = type === Kid.KID_TYPE_NICE ? this.#rightLeftChild : this.#rightLeftChildNaughty;
+			const speed = Config.KID_SPEED * kidType.getDirection() * Math.ceil(Math.random() * 5);
 
-		const kid = new KidImage({
-			kid: kidType,
-			counter: this.#counter,
-			type,
-			speed
-		});
-		this.#targets.add(kid);
-		this.#childGroup.add(kid.getImage());
-		kid.run();
-		this.#kidCounter--;
-		if (this.#kidCounter > 0) {
-			setTimeout(this.newTarget.bind(this), this.#timing);
+			const kid = new KidImage({
+				kid: kidType,
+				counter: this.#counter,
+				type,
+				speed
+			});
+			this.#targets.add(kid);
+			this.#childGroup.add(kid.getImage());
+			kid.run();
+			this.#kidCounter--;
+			if (this.#kidCounter > 0) {
+				setTimeout(this.newTarget.bind(this), this.#timing);
+			}
 		}
 	}
 
@@ -133,5 +135,9 @@ export default class TargetEngine {
 
 	isGameOver() {
 		return this.#gameOver;
+	}
+
+	getScore() {
+		return this.#score.gameScore;
 	}
 }

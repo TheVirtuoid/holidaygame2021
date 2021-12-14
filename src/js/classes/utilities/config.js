@@ -3,6 +3,7 @@ export default class Config {
 	static HEIGHT = 400;
 	static ROTATING_SCREENS_TIMER = 5000;
 	static ROTATING_SCREENS_ORDER = ['main', 'high-score', 'instructions'];
+	static GAME_OVER_TIMER = 3000;
 	static ANCHOR_POINT = 'pitch';
 	static PLAYER_SPEED = 6;
 	static AMMO_SPEED = 750;
@@ -11,4 +12,5 @@ export default class Config {
 	static SCORE_BAD_HIT = -5;
 	static SCORE_BOUNDARY_HIT = -1;
 	static STARTING_HEALTH = 20;
+	static HIGH_SCORE_KEY = 'krampus-night-high-scores';
 }
