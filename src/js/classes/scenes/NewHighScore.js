@@ -115,8 +115,8 @@ export default class NewHighScore extends Scene {
 	}
 
 	saveScore(event) {
-		// this.#savedInitials = this.getInitials();
 		this.#highScores.addScore(this.#savedInitials, this.#score);
+		this.#highScores.sort();
 		document.dispatchEvent(new CustomEvent('done-high-score'));
 	}
 

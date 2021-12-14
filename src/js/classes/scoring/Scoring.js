@@ -2,13 +2,16 @@ export default class Scoring {
 
 	#currentHealth = 0;
 	#currentScore = 0;
+	#currentHighScore = 0;
 	#healthScoreDom = null;
 	#gameScoreDom = null;
+	#highScoreDom = null;
 
 	constructor(doms) {
-		const { healthScoreDom, gameScoreDom } = doms;
+		const { healthScoreDom, gameScoreDom, highScoreDom } = doms;
 		this.#healthScoreDom = healthScoreDom;
 		this.#gameScoreDom = gameScoreDom;
+		this.#highScoreDom = highScoreDom;
 		this.clearGameScore();
 		this.clearHealthScore();
 	}
@@ -19,6 +22,13 @@ export default class Scoring {
 
 	get gameScore () {
 		return this.#currentScore;
+	}
+
+	set highScore (score) {
+		this.#currentHighScore = score;
+		if (this.#highScoreDom) {
+			this.#highScoreDom.textContent = this.#currentHighScore;
+		}
 	}
 
 	get stats () {

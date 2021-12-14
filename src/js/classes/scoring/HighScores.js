@@ -64,4 +64,9 @@ export default class HighScores {
 			dom.insertAdjacentHTML('afterbegin', list);
 		}
 	}
+
+	getHighestScore() {
+		this.load();
+		return this.#highScores[0];
+	}
 }

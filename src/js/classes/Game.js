@@ -45,7 +45,7 @@ export default class Game {
 		this.#rotatingScreens.set('instructions', this.#instructions);
 		this.#rotatingScreens.set('high-score', this.#highScore);
 		this.#actionButtonList.addEventListener('click', this.performAction.bind(this));
-
+		this.#highScoreDom.textContent = this.#highScores.getHighestScore().score;
 	}
 
 	start() {
@@ -54,6 +54,7 @@ export default class Game {
 
 	startRotatingScreens() {
 		this.showStartButton();
+		this.#highScoreDom.textContent = this.#highScores.getHighestScore().score;
 		this.#rotatingScreensOrder = Array.from(Config.ROTATING_SCREENS_ORDER);
 		this.rotateScreens();
 		this.#rotatingScreensHandle = setInterval(this.rotateScreens.bind(this), Config.ROTATING_SCREENS_TIMER);

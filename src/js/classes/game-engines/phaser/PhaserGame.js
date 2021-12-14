@@ -47,7 +47,6 @@ export default class PhaserGame {
 		const scene = this.#game.scene.scenes[0];
 		this.#player.initialPosition();
 		this.#targetEngine.start();
-
 	}
 
 	update() {
